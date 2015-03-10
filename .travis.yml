@@ -1,0 +1,30 @@
+language: c
+
+env:
+  global:
+    - LUAROCKS=2.2.0
+  matrix:
+    - LUA=lua5.1
+    - LUA=lua5.2
+    - LUA=lua5.3
+    - LUA=luajit
+
+before_install:
+  - sudo apt-get update
+  - bash .travis/setup_lua.sh
+  - bash .travis/install_rocks.sh
+  - sudo aptitude install valgrind
+  - sudo pip install cpp-coveralls
+
+install:
+  - luarocks make --local
+  - luarocks path > paths
+  - . paths
+  - rm -r src rote.so # make sure installed version is used
+
+script:
+  - bash .travis/test_with_valgrind.sh
+  - bash .travis/c_coverage.sh
+
+after_success:
+  - coveralls -b .
