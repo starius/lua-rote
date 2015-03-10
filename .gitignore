@@ -27,3 +27,43 @@
 *.i*86
 *.x86_64
 *.hex
+
+# text editor files
+*.swp
+*.autosave
+
+# astyle, hg
+*.orig
+*.org
+
+# logs
+*.log
+
+# qmake
+*.pro.user
+*-build-*
+
+# coverage measurement tools
+c.report.json
+*.gcov
+*.gcda
+*.gcno
+
+# MXE
+usr
+include
+mxe
+
+# cmake
+CMakeFiles
+CMakeCache.txt
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+CTestCostData.txt
+
+# nsis
+nsis*
+
+# my patched busted
+exitless-busted
