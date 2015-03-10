@@ -16,12 +16,8 @@ before_install:
   - bash .travis/install_rote.sh
   - sudo apt-get install valgrind
   - sudo pip install cpp-coveralls
-
-install:
-  - luarocks make --local
   - luarocks path > paths
   - . paths
-  - rm -r src rote.so # make sure installed version is used
 
 script:
   - bash .travis/test_with_valgrind.sh
