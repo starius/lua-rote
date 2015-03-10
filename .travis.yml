@@ -13,7 +13,7 @@ before_install:
   - sudo apt-get update
   - bash .travis/setup_lua.sh
   - bash .travis/install_rocks.sh
-  - sudo aptitude install valgrind
+  - sudo apt-get install valgrind
   - sudo pip install cpp-coveralls
 
 install:
