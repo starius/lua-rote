@@ -1,0 +1,5 @@
+describe("rote", function()
+    it("loads rote module", function()
+        local rote = assert(require "rote")
+    end)
+end)
