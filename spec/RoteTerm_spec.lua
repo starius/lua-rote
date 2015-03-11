@@ -147,5 +147,17 @@ describe("rote.RoteTerm", function()
         assert.equal(' ', rt:cellChar(0, 0))
     end)
 
-    -- TODO write, inject, keypress, getPtyFd
+    it("returns pseudo tty descriptor", function()
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(24, 80)
+        assert.equal(-1, rt:getPtyFd())
+        local pid = rt:forkPty('vi')
+        assert.not_equal(-1, rt:getPtyFd())
+        rt:update()
+        os.execute('kill -9 ' .. pid)
+        rt:forsakeChild()
+        assert.equal(-1, rt:getPtyFd())
+    end)
+
+    -- TODO write, inject, keypress
 end)
