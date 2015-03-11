@@ -134,6 +134,42 @@ static int lua_RoteTerm_setAttr(lua_State* L) {
     return 0;
 }
 
+// arguments:
+// 1. RowTerm
+// 2. int row
+static int lua_RoteTerm_rowText(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    int row = luaL_checkinteger(L, 2);
+    luaL_argcheck(L, row >= 0, 2, "row >= 0");
+    luaL_argcheck(L, row < rt->rows, 2, "row < rows");
+    char* buffer = lua_newuserdata(L, rt->cols);
+    int col;
+    RoteCell* cells = rt->cells[row];
+    for (col = 0; col < rt->cols; col++) {
+        buffer[col] = cells[col].ch;
+    }
+    lua_pushlstring(L, buffer, rt->cols);
+    return 1;
+}
+
+static int lua_RoteTerm_termText(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    int size = rt->rows * (rt->cols + 1);
+    char* buffer = lua_newuserdata(L, size);
+    int row;
+    for (row = 0; row < rt->rows; row++) {
+        char* b1 = buffer + row * (rt->cols + 1);
+        int col;
+        RoteCell* cells = rt->cells[row];
+        for (col = 0; col < rt->cols; col++) {
+            b1[col] = cells[col].ch;
+        }
+        b1[rt->cols] = '\n';
+    }
+    lua_pushlstring(L, buffer, size);
+    return 1;
+}
+
 static int lua_RoteTerm_childPid(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
     lua_pushinteger(L, rt->childpid);
@@ -248,6 +284,8 @@ static const luaL_Reg RoteTerm_mt[] = {
     {"setCellAttr", lua_RoteTerm_setCellAttr},
     {"attr", lua_RoteTerm_attr},
     {"setAttr", lua_RoteTerm_setAttr},
+    {"rowText", lua_RoteTerm_rowText},
+    {"termText", lua_RoteTerm_termText},
     {"childPid", lua_RoteTerm_childPid},
     {"forkPty", lua_RoteTerm_forkPty},
     {"forsakeChild", lua_RoteTerm_forsakeChild},
