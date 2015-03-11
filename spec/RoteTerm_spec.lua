@@ -28,16 +28,6 @@ describe("rote.RoteTerm", function()
         end
     end)
 
-    it("sets all chars to space initially", function()
-        local rote = assert(require "rote")
-        local rt = rote.RoteTerm(24, 80)
-        for row = 0, 23 do
-            for col = 0, 79 do
-                assert.equal(' ', rt:cellChar(row, col))
-            end
-        end
-    end)
-
     it("changes cell char", function()
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
