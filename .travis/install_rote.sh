@@ -6,3 +6,6 @@ cd rote-0.2.8/
 ./configure
 make
 sudo make install prefix=/usr
+
+cd ..
+sudo rm -rf rote-0.2.8/
