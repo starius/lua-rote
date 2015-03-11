@@ -7,5 +7,6 @@ if [ "$LUA" != "luajit" ]; then
         < $BUSTED > exitless-busted
     # valgrind...
     valgrind --error-exitcode=1 --leak-check=full \
+        --gen-suppressions=all \
         lua exitless-busted
 fi
