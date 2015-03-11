@@ -92,5 +92,16 @@ describe("rote.RoteTerm", function()
         assert.not_equal(' ', rt:cellChar(0, 0))
     end)
 
-    -- TODO write, inject, keypress, getPtyFd, Snapshot
+    it("restores from snapshot", function()
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(24, 80)
+        local snapshot = rt:takeSnapshot()
+        assert.equal(' ', rt:cellChar(0, 0))
+        rt:setCellChar(0, 0, 'A')
+        assert.equal('A', rt:cellChar(0, 0))
+        rt:restoreSnapshot(snapshot)
+        assert.equal(' ', rt:cellChar(0, 0))
+    end)
+
+    -- TODO write, inject, keypress, getPtyFd
 end)

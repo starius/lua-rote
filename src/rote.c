@@ -197,6 +197,36 @@ static int lua_RoteTerm_keypress(lua_State* L) {
     return 0;
 }
 
+static void* lua_RoteSnapshot_self(
+        lua_State* L, int index) {
+    void** rs = luaL_checkudata(L,
+            index, "rote_RoteSnapshot");
+    return *rs;
+}
+
+static int lua_RoteSnapshot_gc(lua_State* L) {
+    void* rs = lua_RoteSnapshot_self(L, 1);
+    free(rs);
+    return 0;
+}
+
+static int lua_RoteTerm_takeSnapshot(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    void** rs = lua_newuserdata(L, sizeof(void*));
+    luaL_getmetatable(L, "rote_RoteSnapshot");
+    assert(lua_type(L, -1) == LUA_TTABLE);
+    lua_setmetatable(L, -2);
+    (*rs) = rote_vt_take_snapshot(rt);
+    return 1;
+}
+
+static int lua_RoteTerm_restoreSnapshot(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    void* rs = lua_RoteSnapshot_self(L, 2);
+    rote_vt_restore_snapshot(rt, rs);
+    return 0;
+}
+
 static int lua_RoteTerm_getPtyFd(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
     int fd = rote_vt_get_pty_fd(rt);
@@ -225,9 +255,14 @@ static const luaL_Reg RoteTerm_mt[] = {
     {"write", lua_RoteTerm_write},
     {"inject", lua_RoteTerm_inject},
     {"keypress", lua_RoteTerm_keypress},
-    //{"takeSnapshot", lua_RoteTerm_takeSnapshot},
-    //{"restoreSnapshot", lua_RoteTerm_restoreSnapshot},
+    {"takeSnapshot", lua_RoteTerm_takeSnapshot},
+    {"restoreSnapshot", lua_RoteTerm_restoreSnapshot},
     {"getPtyFd", lua_RoteTerm_getPtyFd},
+    {NULL, NULL}
+};
+
+static const luaL_Reg RoteSnapshot_mt[] = {
+    {"__gc", lua_RoteSnapshot_gc},
     {NULL, NULL}
 };
 
@@ -236,6 +271,12 @@ void register_types(lua_State* L) {
     // metatable of RoteTerm
     luaL_newmetatable(L, "rote_RoteTerm");
     my_setfuncs(L, RoteTerm_mt);
+    lua_pushvalue(L, -1);
+    lua_setfield(L, -2, "__index"); // mt.__index = mt
+    lua_pop(L, 1);
+    // metatable of RoteSnapshot
+    luaL_newmetatable(L, "rote_RoteSnapshot");
+    my_setfuncs(L, RoteSnapshot_mt);
     lua_pushvalue(L, -1);
     lua_setfield(L, -2, "__index"); // mt.__index = mt
     lua_pop(L, 1);
