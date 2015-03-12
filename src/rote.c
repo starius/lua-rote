@@ -1,4 +1,4 @@
-// lua-rote, libROTE Lua bindings
+// lua-rote, Lua binding to ROTE, Terminal Emulation library
 // Copyright (C) 2015 Boris Nagaev
 // See the LICENSE file for terms of use.
 
