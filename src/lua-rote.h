@@ -26,6 +26,9 @@ int lua_toAttr(lua_State *L);
 // converts attribute to foreground, background colors
 int lua_fromAttr(lua_State *L);
 
+// gets and checks attribute at given index
+int lua_getAttr(lua_State* L, int index);
+
 // register standard colors
 // argument -2 is table name => int
 // argument -1 is table int => name

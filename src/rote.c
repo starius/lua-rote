@@ -97,7 +97,7 @@ static int lua_RoteTerm_cellAttr(lua_State* L) {
     return 1;
 }
 
-static int lua_getAttr(lua_State* L, int index) {
+int lua_getAttr(lua_State* L, int index) {
     int attr = luaL_checkinteger(L, index);
     luaL_argcheck(L, attr >= 0, index, "attr >= 0");
     luaL_argcheck(L, attr < 256, index, "attr < 256");
