@@ -13,7 +13,21 @@
 // agrument 3: boolean bold (optinal)
 // agrument 4: boolean blink (optinal)
 int lua_toAttr(lua_State *L) {
-    return 0; // TODO
+    int foreground = luaL_checkinteger(L, 1);
+    int background = luaL_checkinteger(L, 2);
+    int bold = lua_toboolean(L, 3);
+    int blink = lua_toboolean(L, 4);
+    luaL_argcheck(L, foreground >= 0, 1, "foreground >= 0");
+    luaL_argcheck(L, foreground < 8, 2, "foreground < 8");
+    luaL_argcheck(L, background >= 0, 3, "background >= 0");
+    luaL_argcheck(L, background < 8, 4, "background < 8");
+    unsigned char ch = 0;
+    ROTE_ATTR_MOD_FG(ch, foreground);
+    ROTE_ATTR_MOD_BG(ch, background);
+    ROTE_ATTR_MOD_BOLD(ch, bold);
+    ROTE_ATTR_MOD_BLINK(ch, blink);
+    lua_pushinteger(L, ch);
+    return 1;
 }
 
 // converts attribute to foreground, background colors
@@ -23,5 +37,10 @@ int lua_toAttr(lua_State *L) {
 // output 3: boolean bold
 // output 4: boolean blink
 int lua_fromAttr(lua_State *L) {
-    return 0; // TODO
+    int attr = lua_getAttr(L, 1);
+    lua_pushinteger(L, ROTE_ATTR_FG(attr));
+    lua_pushinteger(L, ROTE_ATTR_BG(attr));
+    lua_pushboolean(L, ROTE_ATTR_BOLD(attr));
+    lua_pushboolean(L, ROTE_ATTR_BLINK(attr));
+    return 4;
 }
