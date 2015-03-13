@@ -20,6 +20,15 @@ static int lua_RoteTerm_gc(lua_State* L) {
     return 0;
 }
 
+static int lua_RoteTerm_tostring(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    char text[500];
+    int length = sprintf(text, "RoteTerm %ix%i",
+            rt->rows, rt->cols);
+    lua_pushlstring(L, text, length);
+    return 1;
+}
+
 static int lua_RoteTerm_rows(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
     lua_pushinteger(L, rt->rows);
@@ -274,6 +283,7 @@ static int lua_RoteTerm_getPtyFd(lua_State* L) {
 
 static const luaL_Reg RoteTerm_mt[] = {
     {"__gc", lua_RoteTerm_gc},
+    {"__tostring", lua_RoteTerm_tostring},
     {"rows", lua_RoteTerm_rows},
     {"cols", lua_RoteTerm_cols},
     {"row", lua_RoteTerm_row},

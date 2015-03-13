@@ -4,6 +4,13 @@ describe("rote.RoteTerm", function()
         local rt = rote.RoteTerm(24, 80)
     end)
 
+    it("can be converted to a string", function()
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(24, 80)
+        local text = tostring(rt)
+        assert.falsy(text:match("userdata"))
+    end)
+
     it("throws if size is invalid", function()
         local rote = assert(require "rote")
         assert.has_error(function()
