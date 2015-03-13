@@ -14,7 +14,10 @@ dependencies = {
  external_dependencies = {
     ROTE = {
         header = "rote/rote.h"
-    }
+    },
+    CURSES = {
+        header = "curses.h"
+    },
 }
 build = {
     type = "builtin",
@@ -26,7 +29,7 @@ build = {
                 "src/color.c",
                 "src/lua-rote.c",
             },
-            incdirs = {"$(ROTE_INCDIR)"},
+            incdirs = {"$(ROTE_INCDIR)", "$(CURSES_INCDIR)"},
             libdirs = {"$(ROTE_LIBDIR)"},
             libraries = {"rote"},
         },
