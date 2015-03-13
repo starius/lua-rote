@@ -4,7 +4,7 @@ source = {
     url = "git://github.com/starius/lua-rote.git"
 }
 description = {
-    summary = "libROTE Lua bindings",
+    summary = "Lua binding to ROTE, Terminal Emulation library",
     homepage = "https://github.com/starius/lua-rote",
     license = "LGPL 2.1",
 }
