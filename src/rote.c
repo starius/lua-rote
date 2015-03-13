@@ -235,7 +235,7 @@ static int lua_RoteTerm_inject(lua_State* L) {
 // arguments:
 // 1. RowTerm
 // 2. int keycode
-static int lua_RoteTerm_keypress(lua_State* L) {
+static int lua_RoteTerm_keyPress(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
     int keycode = luaL_checkinteger(L, 2);
     rote_vt_keypress(rt, keycode);
@@ -302,7 +302,7 @@ static const luaL_Reg RoteTerm_mt[] = {
     {"update", lua_RoteTerm_update},
     {"write", lua_RoteTerm_write},
     {"inject", lua_RoteTerm_inject},
-    {"keypress", lua_RoteTerm_keypress},
+    {"keyPress", lua_RoteTerm_keyPress},
     {"takeSnapshot", lua_RoteTerm_takeSnapshot},
     {"restoreSnapshot", lua_RoteTerm_restoreSnapshot},
     {"getPtyFd", lua_RoteTerm_getPtyFd},
