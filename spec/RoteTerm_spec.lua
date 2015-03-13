@@ -212,5 +212,28 @@ describe("rote.RoteTerm", function()
         assert.equal(-1, rt:getPtyFd())
     end)
 
-    -- TODO write, inject, keypress
+    it("edits text file with #vi", function()
+        local text = 'secret'
+        local filename = os.tmpname()
+        local esc = '\27'
+        local enter = '\n'
+        --
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(3, 20)
+        rt:forkPty('vi ' .. filename)
+        os.execute('sleep 1')
+        rt:update()
+        rt:write('i' .. text .. esc .. ':wq' .. enter)
+        os.execute('sleep 1')
+        rt:update()
+        rt:forsakeChild()
+        --
+        local f = io.open(filename, 'r')
+        local text_in_file = f:read('*a'):gsub('%s', '')
+        f:close()
+        os.remove(filename)
+        assert.equal(text, text_in_file)
+    end)
+
+    -- TODO inject, keypress
 end)
