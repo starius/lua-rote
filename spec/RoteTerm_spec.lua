@@ -293,5 +293,12 @@ describe("rote.RoteTerm", function()
         os.remove(filename)
     end)
 
-    -- TODO inject, keypress
+    it("#injects characters into terminal", function()
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(24, 80)
+        rt:inject('secret')
+        assert.truthy(rt:rowText(0):match('secret'))
+    end)
+
+    -- TODO keypress
 end)
