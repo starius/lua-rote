@@ -235,5 +235,63 @@ describe("rote.RoteTerm", function()
         assert.equal(text, text_in_file)
     end)
 
+    it("moves UP and DOWN in #less", function()
+        local text = '1\n2\n3\n4\n5\n6\n7\n8\n'
+        local filename = os.tmpname()
+        local f = io.open(filename, 'w')
+        f:write(text)
+        f:close()
+        local esc = '\27'
+        local up = esc .. '[A'
+        local down = esc .. '[B'
+        local right = esc .. '[C'
+        local left = esc .. '[D'
+        --
+        local rote = assert(require "rote")
+        local rt = rote.RoteTerm(3, 20)
+        rt:forkPty('less ' .. filename)
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:termText():match('1'))
+        assert.truthy(rt:termText():match('2'))
+        --
+        rt:write(down)
+        os.execute('sleep 1')
+        rt:update()
+        assert.falsy(rt:termText():match('1'))
+        assert.truthy(rt:termText():match('2'))
+        assert.truthy(rt:termText():match('3'))
+        --
+        rt:write(down .. down)
+        os.execute('sleep 1')
+        rt:update()
+        assert.falsy(rt:termText():match('1'))
+        assert.falsy(rt:termText():match('2'))
+        assert.falsy(rt:termText():match('3'))
+        assert.truthy(rt:termText():match('4'))
+        assert.truthy(rt:termText():match('5'))
+        --
+        rt:write(right .. right)
+        os.execute('sleep 1')
+        rt:update()
+        assert.falsy(rt:termText():match('1'))
+        assert.falsy(rt:termText():match('2'))
+        assert.falsy(rt:termText():match('3'))
+        assert.falsy(rt:termText():match('4'))
+        assert.falsy(rt:termText():match('5'))
+        --
+        rt:write(up .. up .. up .. left .. left)
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:termText():match('1'))
+        assert.truthy(rt:termText():match('2'))
+        --
+        rt:write('q')
+        rt:update()
+        rt:forsakeChild()
+        --
+        os.remove(filename)
+    end)
+
     -- TODO inject, keypress
 end)
