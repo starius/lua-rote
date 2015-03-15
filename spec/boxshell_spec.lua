@@ -12,7 +12,7 @@ describe("rote.RoteTerm.draw", function()
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
         rt:forkPty('boxshell.lua')
-        os.execute('sleep 1')
+        os.execute('sleep 10')
         rt:update()
         assert.truthy(rt:termText():match('Term In a Box'))
         -- cell (0, 0) must have blue background
@@ -22,7 +22,7 @@ describe("rote.RoteTerm.draw", function()
         -- print contents of the file using command cat
         local cmd = 'cat %s\n'
         rt:write(cmd:format(filename))
-        os.execute('sleep 1')
+        os.execute('sleep 10')
         rt:update()
         assert.truthy(rt:termText():match(secret))
         -- quit boxshell.lua
