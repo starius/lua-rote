@@ -51,7 +51,8 @@ term_win:mvaddstr(0, 27, " Term In a Box ")
 term_win:refresh()
 
 local rt = rote.RoteTerm(20, 70)
-rt:forkPty("/bin/bash --login")
+local command = arg[1] or "/bin/bash --login"
+rt:forkPty(command)
 
 while not getout do
     rt:draw(term_win, 1, 1)
