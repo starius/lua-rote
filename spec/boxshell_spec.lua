@@ -1,3 +1,8 @@
+-- This file is part of lua-rote, Lua binding to ROTE
+-- Terminal Emulation library
+-- Copyright (C) 2015 Boris Nagaev
+-- See the LICENSE file for terms of use.
+
 -- test RoteTerm:draw() and script demo/boxshell.lua
 
 -- FIXME RoteTerm:draw() draws wrong things on Travis
