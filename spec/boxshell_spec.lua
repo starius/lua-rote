@@ -29,7 +29,7 @@ describe("rote.RoteTerm.draw", function()
         rt:update()
         -- FIXME RoteTerm:draw() draws wrong things on Travis
         --assert.truthy(rt:termText():match(secret))
-        -- quiz vim
+        -- quit
         rt:write(':q\n')
         os.execute('sleep 1')
         rt:update()
