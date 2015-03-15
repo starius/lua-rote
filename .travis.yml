@@ -25,4 +25,5 @@ script:
   - bash .travis/c_coverage.sh
 
 after_success:
-  - coveralls -b .
+  - coveralls -b . --dump c.report.json
+  - luacov-coveralls -j c.report.json -v

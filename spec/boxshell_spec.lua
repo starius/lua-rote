@@ -14,7 +14,7 @@ describe("rote.RoteTerm.draw", function()
         -- create RoteTerm, run boxshell.lua in RoteTerm
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
-        rt:forkPty('lua demo/boxshell.lua vi')
+        rt:forkPty('lua -lluacov demo/boxshell.lua vi')
         os.execute('sleep 2')
         rt:update()
         assert.truthy(rt:termText():match('Term In a Box'))
