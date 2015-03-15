@@ -19,7 +19,8 @@ local stdscr = curses.initscr()
 curses.echo(false)
 curses.start_color()
 curses.raw(true)
-stdscr:nodelay(true) -- prevents getch() from blocking
+local tenths_of_second = 1
+curses.halfdelay(tenths_of_second) -- halfdelay mode
 stdscr:keypad(true) -- necessary to use rt:keyPress()
 local screen_h, screen_w = stdscr:getmaxyx()
 
