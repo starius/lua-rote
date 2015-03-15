@@ -36,4 +36,7 @@ build = {
             libraries = {"rote"},
         },
     },
+    install = {
+        bin = { "demo/boxshell.lua" }
+    },
 }
