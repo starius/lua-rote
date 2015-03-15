@@ -234,6 +234,20 @@ static int lua_RoteTerm_inject(lua_State* L) {
 
 // arguments:
 // 1. RowTerm
+// 2. WINDOW
+// 3. int start_row
+// 3. int start_col
+static int lua_RoteTerm_draw(lua_State* L) {
+    RoteTerm* rt = lua_RoteTerm_self(L, 1);
+    WINDOW* win = lua_getWindow(L, 2);
+    int start_row = luaL_checkinteger(L, 3);
+    int start_col = luaL_checkinteger(L, 4);
+    rote_vt_draw(rt, win, start_row, start_col, NULL);
+    return 0;
+}
+
+// arguments:
+// 1. RowTerm
 // 2. int keycode
 static int lua_RoteTerm_keyPress(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
@@ -302,6 +316,7 @@ static const luaL_Reg RoteTerm_mt[] = {
     {"update", lua_RoteTerm_update},
     {"write", lua_RoteTerm_write},
     {"inject", lua_RoteTerm_inject},
+    {"draw", lua_RoteTerm_draw},
     {"keyPress", lua_RoteTerm_keyPress},
     {"takeSnapshot", lua_RoteTerm_takeSnapshot},
     {"restoreSnapshot", lua_RoteTerm_restoreSnapshot},

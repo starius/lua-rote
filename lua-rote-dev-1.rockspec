@@ -9,7 +9,8 @@ description = {
     license = "LGPL 2.1",
 }
 dependencies = {
-    "lua >= 5.1"
+    "lua >= 5.1",
+    "luaposix",
 }
  external_dependencies = {
     ROTE = {
@@ -27,6 +28,7 @@ build = {
                 "src/rote.c",
                 "src/attr.c",
                 "src/color.c",
+                "src/ncurses.c",
                 "src/lua-rote.c",
             },
             incdirs = {"$(ROTE_INCDIR)", "$(CURSES_INCDIR)"},

@@ -8,6 +8,7 @@
 #ifndef LUA_ROTE_H_
 #define LUA_ROTE_H_
 
+#include <ncurses.h>
 #include <rote/rote.h>
 #define LUA_LIB
 #include <lua.h>
@@ -36,6 +37,13 @@ void register_colors(lua_State *L);
 
 // create instance of RoteTerm
 int lua_RoteTerm(lua_State* L);
+
+/** Get curses WINDOW from a userdatum at given index.
+A userdatum stores a pointer to WINDOW.
+Metatable of the userdatum must be "posix.curses:window".
+See luaposix/ext/posix/curses/window.c
+*/
+WINDOW* lua_getWindow(lua_State* L, int index);
 
 // create metatables of types, add them to the registry
 void register_types(lua_State* L);
