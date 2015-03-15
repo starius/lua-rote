@@ -24,6 +24,7 @@ describe("rote.RoteTerm.draw", function()
         rt:write(cmd:format(filename))
         os.execute('sleep 10')
         rt:update()
+        print(rt:termText())
         assert.truthy(rt:termText():match(secret))
         -- quit boxshell.lua
         local EOT = '\004'
