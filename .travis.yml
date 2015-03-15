@@ -17,7 +17,6 @@ before_install:
   - sudo apt-get install valgrind
   - sudo pip install cpp-coveralls
   - luarocks path > paths
-  - echo 'PATH=$PATH:~/.luarocks/bin' >> paths
   - . paths
 
 script:
