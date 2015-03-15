@@ -219,13 +219,14 @@ describe("rote.RoteTerm", function()
         local enter = '\n'
         --
         local rote = assert(require "rote")
+        local wait = assert(require "posix.sys.wait")
         local rt = rote.RoteTerm(3, 20)
-        rt:forkPty('vi ' .. filename)
+        local pid = rt:forkPty('vi ' .. filename)
         os.execute('sleep 1')
         rt:update()
         rt:write('i' .. text .. esc .. ':wq')
         rt:keyPress(string.byte(enter)) -- test keyPress()
-        os.execute('sleep 1')
+        wait.wait(pid)
         rt:update()
         rt:forsakeChild()
         --
