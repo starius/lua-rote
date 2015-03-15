@@ -1,5 +1,13 @@
 #!/usr/bin/env lua
 
+-- This file is part of lua-rote, Lua binding to ROTE
+-- Terminal Emulation library
+-- Copyright (C) 2015 Boris Nagaev
+-- See the LICENSE file for terms of use.
+
+-- ROTE is a simple C library for VT102 terminal emulation.
+-- See http://rote.sourceforge.net/
+
 -- Just a simple example program that creates a terminal
 -- in a frame and lets the user interact with it.
 
