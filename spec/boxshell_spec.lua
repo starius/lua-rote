@@ -20,12 +20,14 @@ describe("rote.RoteTerm.draw", function()
         local fg, bg = rote.fromAttr(attr)
         assert.equal(rote.name2color.blue, bg)
         -- print contents of the file using command cat
-        local cmd = 'cat %s\n'
+        local cmd = 'less %s\n'
         rt:write(cmd:format(filename))
         os.execute('sleep 10')
         rt:update()
         print(rt:termText())
         assert.truthy(rt:termText():match(secret))
+        -- quiz less
+        rt:write('q')
         -- quit boxshell.lua
         local EOT = '\004'
         rt:write(EOT)
