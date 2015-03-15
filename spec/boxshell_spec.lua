@@ -11,7 +11,7 @@ describe("rote.RoteTerm.draw", function()
         -- create RoteTerm, run boxshell.lua in RoteTerm
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
-        rt:forkPty('lua demo/boxshell.lua')
+        rt:forkPty('lua demo/boxshell.lua vi')
         os.execute('sleep 10')
         rt:update()
         assert.truthy(rt:termText():match('Term In a Box'))
@@ -19,18 +19,15 @@ describe("rote.RoteTerm.draw", function()
         local attr = rt:cellAttr(0, 0)
         local fg, bg = rote.fromAttr(attr)
         assert.equal(rote.name2color.blue, bg)
-        -- print contents of the file using command cat
-        local cmd = 'less %s\n'
+        -- open file
+        local cmd = ':e %s\n'
         rt:write(cmd:format(filename))
         os.execute('sleep 10')
         rt:update()
         print(rt:termText())
         assert.truthy(rt:termText():match(secret))
         -- quiz less
-        rt:write('q')
-        -- quit boxshell.lua
-        local EOT = '\004'
-        rt:write(EOT)
+        rt:write(':q\n')
         os.execute('sleep 1')
         rt:update()
         rt:forsakeChild()
