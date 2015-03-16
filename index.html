@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Lua-rote by starius</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Lua-rote</h1>
+        <h2>Lua binding to ROTE, Terminal Emulation library</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/starius/lua-rote/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/starius/lua-rote/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/starius/lua-rote" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="lua-rote" class="anchor" href="#lua-rote" aria-hidden="true"><span class="octicon octicon-link"></span></a>lua-rote</h1>
+
+<p><a href="https://travis-ci.org/starius/lua-rote"><img src="https://travis-ci.org/starius/lua-rote.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/starius/lua-rote?branch=master"><img src="https://coveralls.io/repos/starius/lua-rote/badge.png?branch=master" alt="Coverage Status"></a>
+<a href="https://github.com/starius/lua-rote/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-LGPL2.1-brightgreen.png" alt="License"></a></p>
+
+<p>Lua binding to ROTE, Terminal Emulation library.</p>
+
+<p><a href="http://rote.sourceforge.net/">ROTE</a> is a simple C library for VT102 terminal emulation.</p>
+
+<p>ROTE is extremely useful to programmatically interact
+with curses applications (e.g., for unit testing).</p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Lua 5.1, 5.2, 5.3 or LuaJIT</li>
+<li><a href="http://rote.sourceforge.net/">ROTE</a></li>
+<li>curses (binary + headers)</li>
+<li>luaposix</li>
+</ul>
+
+<blockquote>
+<p>Curses and luaposix are needed for drawing state of ROTE
+terminal on curses' WINDOW object
+(method <a href="#draw">RoteTerm:draw()</a>).
+If you do not need this feature and want to exclude these
+two dependencies, then remove CURSES and luaposix from
+file <code>lua-rote-*.rockspec</code>.</p>
+</blockquote>
+
+<p>See <a href=".travis/install_rote.sh">shell script</a> with installation
+commands for Debian Wheezy.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>This library is built using <a href="http://luarocks.org">LuaRocks</a>.</p>
+
+<h3>
+<a id="install-from-luarocks-server" class="anchor" href="#install-from-luarocks-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from LuaRocks server</h3>
+
+<div class="highlight highlight-bash"><pre>$ luarocks install lua-rote</pre></div>
+
+<p>If you have installed ROTE to prefix other than "/usr",
+you have to provide this path to LuaRocks.
+For example, if you have installed ROTE to "/usr/local",
+use the following command:</p>
+
+<div class="highlight highlight-bash"><pre>$ luarocks install lua-rote ROTE_DIR=/usr/local</pre></div>
+
+<h3>
+<a id="install-from-local-source-tree" class="anchor" href="#install-from-local-source-tree" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install from local source tree</h3>
+
+<div class="highlight highlight-bash"><pre>$ git clone https://github.com/starius/lua-rote.git
+$ <span class="pl-s3">cd</span> lua-rote
+$ luarocks make</pre></div>
+
+<h2>
+<a id="running-unit-tests" class="anchor" href="#running-unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running unit tests</h2>
+
+<p>Unit tests are written using unit testing framework
+<a href="http://olivinelabs.com/busted/">busted</a>.
+Unit tests can serve as reference documentation and
+code examples.</p>
+
+<p>To run unit tests, install busted from LuaRocks:</p>
+
+<div class="highlight highlight-bash"><pre>$ luarocks install busted</pre></div>
+
+<p>Go to the source folder of lua-rote and run command <code>busted</code>:</p>
+
+<div class="highlight highlight-bash"><pre>$ busted
+++++++++++++++++++++++++++++++++
+32 successes / 0 failures / 0 errors / 0 pending <span class="pl-s3">:</span> 1.5 seconds</pre></div>
+
+<h2>
+<a id="running-the-demo" class="anchor" href="#running-the-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the demo</h2>
+
+<p>Program <a href="https://github.com/starius/lua-rote/blob/master/demo/boxshell.lua">boxshell.lua</a> is a clone of
+ROTE's example program "boxshell.c" (file "demo/boxshell.c"
+in ROTE's source tree).
+Both programs include the following steps:</p>
+
+<ul>
+<li>start curses,</li>
+<li>fill the screen with blue,</li>
+<li>create curses window in the middle of the screen,</li>
+<li>start ROTE terminal, fork bash inside,</li>
+<li>do in a loop until child process dies:
+
+<ul>
+<li>redraw curses window accorsing to ROTE terminal,</li>
+<li>
+<code>getch()</code>, results of which are passed to ROTE terminal.</li>
+</ul>
+</li>
+</ul>
+
+<p>Run <code>lua demo/boxshell.lua</code>, <code>ls</code>, <code>busted</code>:</p>
+
+<p><img src="http://i.imgur.com/F5K9gJt.png" alt="boxshell.lua"></p>
+
+<blockquote>
+<p>Currently lua-rote does not support unicode characters,
+that is why busted was changed to produce "+" instead of "●".</p>
+
+<p>There are some differences between boxshell.c and
+boxshell.lua. Program boxshell.lua can fork other commands
+as well as bash. boxshell.c uses <code>nodelay</code> mode
+repeating draw-getch cycle without a delay,
+while boxshell.lua uses <code>halfdelay</code> mode repeating
+draw-getch cycle 10 times a second.
+That is why boxshell.c constantly consumes 100% CPU,
+while boxshell.lua consumes almost no CPU when inactive.</p>
+</blockquote>
+
+<h2>
+<a id="reference" class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<h3>
+<a id="module-rote" class="anchor" href="#module-rote" aria-hidden="true"><span class="octicon octicon-link"></span></a>Module rote</h3>
+
+<p>Library lua-rote is loaded from module "rote":</p>
+
+<div class="highlight highlight-lua"><pre>rote <span class="pl-k">=</span> <span class="pl-s3">require</span> <span class="pl-s1"><span class="pl-pds">'</span>rote<span class="pl-pds">'</span></span></pre></div>
+
+<p>All code of the library "lives" inside this module.</p>
+
+<h3>
+<a id="class-roteterm" class="anchor" href="#class-roteterm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class RoteTerm</h3>
+
+<p>The main part of the library is class RoteTerm.
+It wraps C structure RoteTerm, declared in library ROTE.
+RoteTerm represents terminal emulator.</p>
+
+<p>Create a new virtual terminal with the given dimensions.
+(Height is 24 rows, width is 80 columns.)</p>
+
+<div class="highlight highlight-lua"><pre>rt <span class="pl-k">=</span> rote.<span class="pl-s3">RoteTerm</span>(<span class="pl-c1">24</span>, <span class="pl-c1">80</span>)</pre></div>
+
+<p>Instance of RoteTerm is destroyed automatically
+when the corresponding Lua object is collected.</p>
+
+<h3>
+<a id="start-child-process" class="anchor" href="#start-child-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start child process</h3>
+
+<p>Start a forked process in the terminal:</p>
+
+<div class="highlight highlight-lua"><pre>pid <span class="pl-k">=</span> rt:<span class="pl-s3">forkPty</span>(<span class="pl-s1"><span class="pl-pds">'</span>less /some/file<span class="pl-pds">'</span></span>)</pre></div>
+
+<p>The command will be interpreted by '/bin/sh -c'.</p>
+
+<p>Returns PID of the child process.
+On error returns <code>-1</code>.
+Notice that passing an invalid command will not cause
+an error at this level: the shell will try to execute
+the command and will exit with status 127. You can catch
+that by installing a <code>SIGCHLD</code> handler if you want.</p>
+
+<blockquote>
+<p>If you want to be notified when child processes exits,
+you should handle the <code>SIGCHLD</code> signal.
+If, on the other hand, you want to ignore exitting
+child processes, you should set the <code>SIGCHLD</code> handler to
+<code>SIG_IGN</code> to prevent child processes from hanging
+around the system as 'zombie processes'.</p>
+
+<p>You can use luaposix to manage child processes as described
+above. See file <a href="https://github.com/starius/lua-rote/blob/master/demo/boxshell.lua">demo/boxshell.lua</a>.</p>
+
+<p>Continuing to write to a RoteTerm whose child process
+has died does not accomplish a lot, but is not an error
+and should not cause your program to crash or block
+indefinitely or anything of that sort :-)</p>
+
+<p>If, however, you want to be tidy and inform the RoteTerm
+that its child has died, call method <code>forsakeChild</code>
+when appropriate.</p>
+</blockquote>
+
+<p>You can get the PID later by calling <code>rt:childPid()</code>.</p>
+
+<p>Disconnect the RoteTerm from its forked child process:</p>
+
+<div class="highlight highlight-lua"><pre>rt:<span class="pl-s3">forsakeChild</span>()</pre></div>
+
+<h3>
+<a id="getting-contents-of-the-terminal" class="anchor" href="#getting-contents-of-the-terminal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting contents of the terminal</h3>
+
+<p>You can get number of rows and columns of the terminal:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">rows</span>()) <span class="pl-c">-- integer</span>
+<span class="pl-s3">print</span>(rt:<span class="pl-s3">cols</span>()) <span class="pl-c">-- integer</span></pre></div>
+
+<p>Get cursor coordinates:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">row</span>()) <span class="pl-c">-- integer</span>
+<span class="pl-s3">print</span>(rt:<span class="pl-s3">col</span>()) <span class="pl-c">-- integer</span></pre></div>
+
+<p>Before getting any output from the child process, call method
+<code>rt:update()</code> to update internal state of RoteTerm.</p>
+
+<p>You can get value of character and attribute of any cell:</p>
+
+<div class="highlight highlight-lua"><pre>row <span class="pl-k">=</span> <span class="pl-c1">0</span>
+col <span class="pl-k">=</span> <span class="pl-c1">0</span>
+<span class="pl-s3">print</span>(rt:<span class="pl-s3">cellChar</span>(row, col)) <span class="pl-c">-- string of length 1</span>
+attr <span class="pl-k">=</span> rt:<span class="pl-s3">cellAttr</span>(row, col) <span class="pl-c">-- integer</span></pre></div>
+
+<p>lua-rote provides <a href="#handling-attributes">several functions</a>
+to handle attribute values.</p>
+
+<p>Get current attribute, that is the attribute that will be
+used for newly characters:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">attr</span>()) <span class="pl-c">-- integer</span></pre></div>
+
+<p>Get a row as a string (not terminated with <code>\n</code>):</p>
+
+<div class="highlight highlight-lua"><pre>row <span class="pl-k">=</span> <span class="pl-c1">0</span>
+<span class="pl-s3">print</span>(rt:<span class="pl-s3">rowText</span>(row)) <span class="pl-c">-- string</span></pre></div>
+
+<p>Get whole terminal as a string (rows are terminated with <code>\n</code>):</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">termText</span>()) <span class="pl-c">-- string</span></pre></div>
+
+<p><a name="draw" id="draw"></a>
+Draw contents of ROTE terminal on curses WINDOW:</p>
+
+<div class="highlight highlight-lua"><pre>curses <span class="pl-k">=</span> <span class="pl-s3">require</span> <span class="pl-s1"><span class="pl-pds">'</span>posix.curses<span class="pl-pds">'</span></span>
+<span class="pl-c">-- setup curses, see demo/boxshell.lua</span>
+window <span class="pl-k">=</span> <span class="pl-c1">...</span>
+rt <span class="pl-k">=</span> <span class="pl-c1">...</span>
+start_row <span class="pl-k">=</span> <span class="pl-c1">0</span>
+start_col <span class="pl-k">=</span> <span class="pl-c1">0</span>
+rt:<span class="pl-s3">draw</span>(window, start_row, start_col)</pre></div>
+
+<h3>
+<a id="changing-terminal-state" class="anchor" href="#changing-terminal-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing terminal state</h3>
+
+<p>You can directly change internal state of RoteTerm by
+calling the following methods:</p>
+
+<div class="highlight highlight-lua"><pre>rt:<span class="pl-s3">setCellChar</span>(row, col, character) <span class="pl-c">-- character at (row, col)</span>
+rt:<span class="pl-s3">setCellAttr</span>(row, col, attr) <span class="pl-c">-- attribute at (row, col)</span>
+rt:<span class="pl-s3">setAttr</span>(attr) <span class="pl-c">-- current attribute</span></pre></div>
+
+<p>You can pass data to the child process or to the terminal:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-c">-- Puts data ':wq\n' into the terminal.</span>
+<span class="pl-c">-- If there is a forked process, the data will be sent to it.</span>
+<span class="pl-c">-- If there is no forked process, the data will simply</span>
+<span class="pl-c">-- be injected into the terminal (as in inject()).</span>
+rt:<span class="pl-s3">write</span>(<span class="pl-s1"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
+
+<span class="pl-c">-- Inject data directly into the terminal.</span>
+rt:<span class="pl-s3">inject</span>(<span class="pl-s1"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
+
+<span class="pl-c">-- Indicates to the terminal that the key has been pressed.</span>
+<span class="pl-c">-- Appropriate escape sequence is passed to method write().</span>
+<span class="pl-k">local</span> keycode <span class="pl-k">=</span> <span class="pl-s3">string.byte</span>(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>) <span class="pl-c">-- integer</span>
+rt:<span class="pl-s3">keyPress</span>(keycode)</pre></div>
+
+<h3>
+<a id="snapshots" class="anchor" href="#snapshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Snapshots</h3>
+
+<div class="highlight highlight-lua"><pre><span class="pl-c">-- take a snapshot of the current contents of the terminal</span>
+snapshot <span class="pl-k">=</span> rt:<span class="pl-s3">takeSnapshot</span>()
+<span class="pl-c">-- ... do something ...</span>
+<span class="pl-c">-- restore a snapshot previously taken</span>
+rt:<span class="pl-s3">restoreSnapshot</span>(snapshot)</pre></div>
+
+<p>Snapshot object is deleted automatically when the
+corresponding Lua object is collected.</p>
+
+<p><a name="handling-attributes" id="handling-attributes"></a></p>
+
+<h3>
+<a id="handling-attributes" class="anchor" href="#handling-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling attributes</h3>
+
+<p>An 'attribute' as used in this library means an 8-bit value
+that conveys a foreground color code, a background color code,
+and the bold and blink bits. Each cell in the virtual terminal
+screen is associated with an attribute that specifies
+its appearance.</p>
+
+<p>The bits of an attribute, from most significant to
+least significant, are</p>
+
+<pre><code> bit:      7 6 5 4 3 2 1 0
+ content:  S F F F H B B B
+           | `-,-' | `-,-'
+           |   |   |   |
+           |   |   |   `----- 3-bit background color (0 - 7)
+           |   |   `--------- blink bit
+           |   `------------- 3-bit foreground color (0 - 7)
+           `----------------- bold bit
+</code></pre>
+
+<p>Color codes:</p>
+
+<ul>
+<li>0 = black,</li>
+<li>1 = red,</li>
+<li>2 = green,</li>
+<li>3 = yellow,</li>
+<li>4 = blue,</li>
+<li>5 = magenta,</li>
+<li>6 = cyan,</li>
+<li>7 = white.</li>
+</ul>
+
+<p>There are functions provided to "pack" and "unpack"
+attribute bits:</p>
+
+<div class="highlight highlight-lua"><pre>foreground, background, bold, blink <span class="pl-k">=</span> rote.<span class="pl-s3">fromAttr</span>(attr)
+attr <span class="pl-k">=</span> rote.<span class="pl-s3">toAttr</span>(foreground, background, bold, blink)
+<span class="pl-c">-- foreground and background are integers (0 - 7)</span>
+<span class="pl-c">-- bold and blink are booleans</span></pre></div>
+
+<p>The library provides tables converting color codes to and from
+human readable names:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rote.<span class="pl-vo">color2name</span>[<span class="pl-c1">2</span>]) <span class="pl-c">-- prints "green"</span>
+<span class="pl-s3">print</span>(rote.<span class="pl-vo">name2color</span>.<span class="pl-vo">green</span>) <span class="pl-c">-- prints "2"</span></pre></div>
+
+<h2>
+<a id="bugs" class="anchor" href="#bugs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bugs</h2>
+
+<ul>
+<li>Unicode characters are printed and read with errors.</li>
+<li>Method <code>RoteTerm:draw()</code> is <a href="https://travis-ci.org/starius/lua-rote/jobs/54462650#L1165">unreliable</a>
+</li>
+</ul>
+
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>Corresponding author: Boris Nagaev, email: <a href="mailto:bnagaev@gmail.com">bnagaev@gmail.com</a></p>
+
+<p>Copyright (C) 2015 Boris Nagaev</p>
+
+<p>See the <a href="https://github.com/starius/lua-rote/blob/master/LICENSE">License</a> file for terms of use.</p>
+
+<p>ROTE was written by Bruno T. C. de Oliveira,
+see <a href="http://rote.sourceforge.net/">rote.sourceforge.net</a> for more information.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
