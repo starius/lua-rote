@@ -356,4 +356,4 @@ ROTE was written by Bruno T. C. de Oliveira,
 see [rote.sourceforge.net][1] for more information.
 
 [1]: http://rote.sourceforge.net/
-[2]: https://travis-ci.org/starius/lua-rote/jobs/54462650#L1165
+[2]: https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160

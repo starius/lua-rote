@@ -6,7 +6,7 @@
 -- test RoteTerm:draw() and script demo/boxshell.lua
 
 -- FIXME RoteTerm:draw() draws wrong things on Travis
--- https://travis-ci.org/starius/lua-rote/jobs/54462650#L1165
+-- https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160
 
 describe("rote.RoteTerm.draw", function()
     it("draws the terminal to the #curses window", function()
