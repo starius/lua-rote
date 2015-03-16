@@ -32,7 +32,7 @@ commands for Debian Wheezy.
 
 This library is built using [LuaRocks](http://luarocks.org).
 
-### Install from LuaRocks server
+### Option 1: install from LuaRocks server
 
 ```bash
 $ luarocks install lua-rote
@@ -47,7 +47,7 @@ use the following command:
 $ luarocks install lua-rote ROTE_DIR=/usr/local
 ```
 
-### Install from local source tree
+### Option 2: install from local source tree
 
 ```bash
 $ git clone https://github.com/starius/lua-rote.git
