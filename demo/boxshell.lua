@@ -16,6 +16,7 @@
 local curses = require 'posix.curses'
 local signal = require 'posix.signal'
 local rote = require 'rote'
+local name2color = rote.name2color
 
 local getout = false
 
@@ -47,8 +48,8 @@ for foreground = 0, 7 do
 end
 
 -- paint the screen blue
-local background = rote.name2color.blue
-local foreground = rote.name2color.white
+local background = name2color.blue
+local foreground = name2color.white
 local pair = makePair(foreground, background)
 stdscr:attrset(curses.color_pair(pair))
 for i = 0, screen_h - 1 do
@@ -61,7 +62,8 @@ stdscr:refresh()
 -- create a window with a frame
 local term_win = curses.newwin(22, 72, 1, 4)
 -- black over white
-term_win:attrset(curses.color_pair(7 * 8 + 7 - 0))
+local pair = makePair(name2color.black, name2color.white)
+term_win:attrset(curses.color_pair(pair))
 term_win:border(0, 0, 0, 0, 0, 0, 0, 0)
 term_win:mvaddstr(0, 27, " Term In a Box ")
 term_win:refresh()
