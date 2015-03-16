@@ -272,6 +272,8 @@ local keycode = string.byte('\n') -- integer
 rt:keyPress(keycode)
 ```
 
+You can get values of keycodes from [posix.curses][3].
+
 ### Snapshots
 
 ```lua
@@ -357,3 +359,4 @@ see [rote.sourceforge.net][1] for more information.
 
 [1]: http://rote.sourceforge.net/
 [2]: https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160
+[3]: https://luaposix.github.io/luaposix/modules/posix.curses.html
