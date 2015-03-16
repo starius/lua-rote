@@ -32,18 +32,25 @@ curses.halfdelay(tenths_of_second) -- halfdelay mode
 stdscr:keypad(true) -- necessary to use rt:keyPress()
 local screen_h, screen_w = stdscr:getmaxyx()
 
+local function makePair(foreground, background)
+    return background * 8 + 7 - foreground
+end
+
 -- initialize the color pairs the way rt:draw() expects it
 for foreground = 0, 7 do
     for background = 0, 7 do
         if foreground ~= 7 or background ~= 0 then
-            local pair = background * 8 + 7 - foreground
+            local pair = makePair(foreground, background)
             curses.init_pair(pair, foreground, background)
         end
     end
 end
 
 -- paint the screen blue
-stdscr:attrset(curses.color_pair(32))
+local background = rote.name2color.blue
+local foreground = rote.name2color.white
+local pair = makePair(foreground, background)
+stdscr:attrset(curses.color_pair(pair))
 for i = 0, screen_h - 1 do
     for j = 0, screen_w - 1 do
         stdscr:addch(string.byte(' '))
