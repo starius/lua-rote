@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/starius/lua-rote.png?branch=master)](https://travis-ci.org/starius/lua-rote)
 [![Coverage Status](https://coveralls.io/repos/starius/lua-rote/badge.png?branch=master)](https://coveralls.io/r/starius/lua-rote?branch=master)
-[![License](http://img.shields.io/badge/License-LGPL2.1-brightgreen.png)](LICENSE)
+[![License](http://img.shields.io/badge/License-LGPL2.1-brightgreen.png)][4]
 
 ## Description
 
@@ -62,7 +62,7 @@ with curses applications (e.g., for unit testing).
 > two dependencies, then remove CURSES and luaposix from
 > file `lua-rote-*.rockspec`.
 
-See [shell script](.travis/install_rote.sh) with installation
+See [shell script][5] with installation
 commands for Debian Wheezy.
 
 ## Installation
@@ -115,7 +115,7 @@ $ busted
 
 ## Running the demo
 
-Program [boxshell.lua](demo/boxshell.lua) is a clone of
+Program [boxshell.lua][6] is a clone of
 ROTE's example program "boxshell.c" (file "demo/boxshell.c"
 in ROTE's source tree).
 Both programs include the following steps:
@@ -197,7 +197,7 @@ that by installing a `SIGCHLD` handler if you want.
 > around the system as 'zombie processes'.
 >
 > You can use luaposix to manage child processes as described
-> above. See file [demo/boxshell.lua](demo/boxshell.lua).
+> above. See file [demo/boxshell.lua][6].
 >
 > Continuing to write to a RoteTerm whose child process
 > has died does not accomplish a lot, but is not an error
@@ -391,7 +391,7 @@ Corresponding author: Boris Nagaev, email: bnagaev@gmail.com
 
 Copyright (C) 2015 Boris Nagaev
 
-See the LICENSE file for terms of use.
+See the [LICENSE][4] file for terms of use.
 
 ROTE was written by Bruno T. C. de Oliveira,
 see [rote.sourceforge.net][1] for more information.
@@ -399,3 +399,6 @@ see [rote.sourceforge.net][1] for more information.
 [1]: http://rote.sourceforge.net/
 [2]: https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160
 [3]: https://luaposix.github.io/luaposix/modules/posix.curses.html
+[4]: LICENSE
+[5]: .travis/install_rote.sh
+[6]: demo/boxshell.lua
