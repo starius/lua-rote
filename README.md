@@ -14,6 +14,37 @@ characters and such. The library supports ncurses as well so
 that you may render the virtual screen to the real screen
 when you need to.
 
+There are several programs that do terminal emulation, such
+as xterm, rxvt, screen and even the Linux console driver
+itself. However, it is not easy to isolate their terminal
+emulation logic and put it in a module that can be easily
+reused in other programs. That's where the ROTE library
+comes in.
+
+The goal of the lua-rote library is to provide terminal
+emulation support for Lua applications, making it
+possible to write programs that display terminals in
+embedded windows within them, or even monitor the display
+produced by other programs. The lua-rote library depend
+only on Lua, ROTE itself, ncurses and luaposix.
+
+The ROTE library is able to render the
+virtual screens to the physical screen (actually any
+ncurses window) and can also translate ncurses key codes to
+the escape sequences the Linux console would have produced
+(and feed them into the terminal). Using ncurses is not
+mandatory however, and ROTE will work fine without it, but
+in that case the application must take care of drawing the
+terminal to the screen in whichever way it sees fit.
+
+ROTE also encapsulates the functionality needed to execute
+a child process using the virtual screen as the controlling
+terminal. It will handle the creation of the
+pseudo-terminal and the child process. All the application
+has to do is tell it the command to run in the terminal and
+call an update function at regular intervals to allow the
+terminal to update itself.
+
 ROTE is extremely useful to programmatically interact
 with curses applications (e.g., for unit testing).
 
