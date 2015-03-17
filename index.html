@@ -29,21 +29,59 @@
     <div class="container">
       <section id="main_content">
         <h1>
-<a id="lua-rote" class="anchor" href="#lua-rote" aria-hidden="true"><span class="octicon octicon-link"></span></a>lua-rote</h1>
+<a id="lua-rote-lua-binding-to-rote-terminal-emulation-library" class="anchor" href="#lua-rote-lua-binding-to-rote-terminal-emulation-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>lua-rote, Lua binding to ROTE, Terminal Emulation library</h1>
 
 <p><a href="https://travis-ci.org/starius/lua-rote"><img src="https://travis-ci.org/starius/lua-rote.png?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/r/starius/lua-rote?branch=master"><img src="https://coveralls.io/repos/starius/lua-rote/badge.png?branch=master" alt="Coverage Status"></a>
 <a href="https://github.com/starius/lua-rote/blob/master/LICENSE"><img src="http://img.shields.io/badge/License-LGPL2.1-brightgreen.png" alt="License"></a></p>
 
-<p>Lua binding to ROTE, Terminal Emulation library.</p>
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
 
-<p><a href="http://rote.sourceforge.net/">ROTE</a> is a simple C library for VT102 terminal emulation.</p>
+<p><a href="http://rote.sourceforge.net/">ROTE</a> is a simple C library for VT102 terminal emulation.
+It allows the programmer to set up virtual 'screens' and send
+them data. The virtual screens will emulate the behavior of a
+VT102 terminal, interpreting escape sequences, control
+characters and such. The library supports ncurses as well so
+that you may render the virtual screen to the real screen
+when you need to.</p>
+
+<p>There are several programs that do terminal emulation, such
+as xterm, rxvt, screen and even the Linux console driver
+itself. However, it is not easy to isolate their terminal
+emulation logic and put it in a module that can be easily
+reused in other programs. That's where the ROTE library
+comes in.</p>
+
+<p>The goal of the lua-rote library is to provide terminal
+emulation support for Lua applications, making it
+possible to write programs that display terminals in
+embedded windows within them, or even monitor the display
+produced by other programs. The lua-rote library depend
+only on Lua, ROTE itself, ncurses and luaposix.</p>
+
+<p>The ROTE library is able to render the
+virtual screens to the physical screen (actually any
+ncurses window) and can also translate ncurses key codes to
+the escape sequences the Linux console would have produced
+(and feed them into the terminal). Using ncurses is not
+mandatory however, and ROTE will work fine without it, but
+in that case the application must take care of drawing the
+terminal to the screen in whichever way it sees fit.</p>
+
+<p>ROTE also encapsulates the functionality needed to execute
+a child process using the virtual screen as the controlling
+terminal. It will handle the creation of the
+pseudo-terminal and the child process. All the application
+has to do is tell it the command to run in the terminal and
+call an update function at regular intervals to allow the
+terminal to update itself.</p>
 
 <p>ROTE is extremely useful to programmatically interact
 with curses applications (e.g., for unit testing).</p>
 
 <h2>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
 
 <ul>
 <li>Lua 5.1, 5.2, 5.3 or LuaJIT</li>
@@ -269,7 +307,7 @@ start_col <span class="pl-k">=</span> <span class="pl-c1">0</span>
 rt:<span class="pl-s3">draw</span>(window, start_row, start_col)</pre></div>
 
 <h3>
-<a id="changing-terminal-state" class="anchor" href="#changing-terminal-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing terminal state</h3>
+<a id="changing-the-terminal-state" class="anchor" href="#changing-the-terminal-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing the terminal state</h3>
 
 <p>You can directly change internal state of RoteTerm by
 calling the following methods:</p>
@@ -293,6 +331,8 @@ rt:<span class="pl-s3">inject</span>(<span class="pl-s1"><span class="pl-pds">'<
 <span class="pl-c">-- Appropriate escape sequence is passed to method write().</span>
 <span class="pl-k">local</span> keycode <span class="pl-k">=</span> <span class="pl-s3">string.byte</span>(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>) <span class="pl-c">-- integer</span>
 rt:<span class="pl-s3">keyPress</span>(keycode)</pre></div>
+
+<p>You can get values of keycodes from <a href="https://luaposix.github.io/luaposix/modules/posix.curses.html">posix.curses</a>.</p>
 
 <h3>
 <a id="snapshots" class="anchor" href="#snapshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Snapshots</h3>
@@ -366,6 +406,8 @@ human readable names:</p>
 </li>
 </ul>
 
+<p><a href="https://github.com/starius/lua-rote/issues/new">Report a bug</a></p>
+
 <h2>
 <a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
 
@@ -373,7 +415,7 @@ human readable names:</p>
 
 <p>Copyright (C) 2015 Boris Nagaev</p>
 
-<p>See the <a href="https://github.com/starius/lua-rote/blob/master/LICENSE">License</a> file for terms of use.</p>
+<p>See the <a href="https://github.com/starius/lua-rote/blob/master/LICENSE">LICENSE</a> file for terms of use.</p>
 
 <p>ROTE was written by Bruno T. C. de Oliveira,
 see <a href="http://rote.sourceforge.net/">rote.sourceforge.net</a> for more information.</p>
