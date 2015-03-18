@@ -12,7 +12,7 @@ dependencies = {
     "lua >= 5.1",
     "luaposix",
 }
- external_dependencies = {
+external_dependencies = {
     ROTE = {
         header = "rote/rote.h"
     },
