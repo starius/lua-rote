@@ -345,6 +345,81 @@ curses.endwin()
         os.remove(app_lua_fname)
     end)
 
+    it("reads cell where #background=foreground from child",
+    function()
+        local app_lua = [[
+curses = require 'posix.curses'
+stdscr = curses.initscr()
+curses.echo(false)
+curses.start_color()
+curses.raw(true)
+curses.curs_set(0)
+stdscr:nodelay(false)
+stdscr:keypad(true)
+--
+local function makePair(foreground, background)
+    return background * 8 + 7 - foreground
+end
+--
+for foreground = 0, 7 do
+    for background = 0, 7 do
+        if foreground ~= 7 or background ~= 0 then
+            local pair = makePair(foreground, background)
+            curses.init_pair(pair, foreground, background)
+        end
+    end
+end
+--
+stdscr:move(0, 0)
+stdscr:attrset(curses.color_pair(makePair(0, 0)))
+stdscr:addch(string.byte('A'))
+stdscr:move(0, 1)
+stdscr:attrset(curses.color_pair(makePair(0, 7)))
+stdscr:addch(string.byte('B'))
+stdscr:refresh()
+--
+stdscr:getch()
+--
+stdscr:move(0, 0)
+stdscr:attrset(curses.color_pair(makePair(0, 0)))
+stdscr:addch(string.byte('C'))
+stdscr:move(0, 1)
+stdscr:attrset(curses.color_pair(makePair(0, 7)))
+stdscr:addch(string.byte('D'))
+stdscr:refresh()
+--
+stdscr:getch()
+--
+curses.endwin()
+]]
+        --
+        local app_lua_fname = os.tmpname()
+        local f = io.open(app_lua_fname, 'w')
+        f:write(app_lua)
+        f:close()
+        --
+        local rote = require 'rote'
+        rt = rote.RoteTerm(24, 80)
+        local cmd = 'lua %s'
+        cmd = cmd:format(app_lua_fname)
+        rt:forkPty(cmd)
+        --
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:rowText(0):match('AB'))
+        --
+        rt:write(' ')
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:rowText(0):match('CD'))
+        --
+        rt:write(' ')
+        rt:update()
+        rt:forsakeChild()
+        --
+        os.remove(app_lua_fname)
+    end)
+
     it("restores from snapshot", function()
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
