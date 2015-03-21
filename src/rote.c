@@ -192,8 +192,14 @@ static int lua_RoteTerm_childPid(lua_State* L) {
 // 1. pid
 static int lua_RoteTerm_forkPty(lua_State* L) {
     RoteTerm* rt = lua_RoteTerm_self(L, 1);
-    const char* command = luaL_checkstring(L, 2);
-    int pid = rote_vt_forkpty(rt, command);
+    size_t command_len;
+    const char* command = luaL_checklstring(L, 2,
+            &command_len);
+    size_t size = command_len + 100;
+    char* cmd = lua_newuserdata(L, size);
+    sprintf(cmd, "LINES=%i COLUMNS=%i %s",
+            rt->rows, rt->cols, command);
+    int pid = rote_vt_forkpty(rt, cmd);
     lua_pushinteger(L, pid);
     return 1;
 }

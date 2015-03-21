@@ -184,6 +184,67 @@ describe("rote.RoteTerm", function()
         -- TODO fix zombie
     end)
 
+    it("does not #leak screen size to child", function()
+        local sizes_lua = [[
+curses = require 'posix.curses'
+stdscr = curses.initscr()
+win_rows, win_cols = stdscr:getmaxyx()
+curses.endwin()
+f = io.open(%q, 'w')
+f:write('win_rows=' .. win_rows ..
+        ' win_cols=' .. win_cols .. '\n')
+f:close()
+]]
+        local out_fname = os.tmpname()
+        sizes_lua = sizes_lua:format(out_fname)
+        --
+        local sizes_lua_fname = os.tmpname()
+        local f = io.open(sizes_lua_fname, 'w')
+        f:write(sizes_lua)
+        f:close()
+        --
+        local rote_lua = [[
+rote = require 'rote'
+rows = %i
+cols = %i
+rt = rote.RoteTerm(rows, cols)
+rt:forkPty('lua %s')
+os.execute('sleep 1')
+rt:update()
+rt:write('q')
+rt:update()
+rt:forsakeChild()
+]]
+        local rows = 4
+        local cols = 5
+        rote_lua = rote_lua:format(rows, cols,
+            sizes_lua_fname)
+        local rote_lua_fname = os.tmpname()
+        local f = io.open(rote_lua_fname, 'w')
+        f:write(rote_lua)
+        f:close()
+        --
+        local expected = 'win_rows=' .. rows ..
+            ' win_cols=' .. cols
+        --
+        os.execute('lua ' .. rote_lua_fname)
+        local f = io.open(out_fname, 'r')
+        local out = f:read('*a')
+        f:close()
+        assert.truthy(out:match(expected))
+        --
+        os.remove(out_fname)
+        os.execute('cat ' .. rote_lua_fname .. ' | lua -i > /dev/null 2>&1')
+        local f = io.open(out_fname, 'r')
+        local out = f:read('*a')
+        f:close()
+        assert.truthy(out:match(expected))
+        --
+        os.remove(out_fname)
+        os.remove(sizes_lua_fname)
+        os.remove(rote_lua_fname)
+    end)
+
     it("gets updates from child", function()
         local rote = assert(require "rote")
         local rt = rote.RoteTerm(24, 80)
