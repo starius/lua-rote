@@ -255,9 +255,7 @@ rt:forsakeChild()
         assert.not_equal(' ', rt:cellChar(0, 0))
     end)
 
-    pending("reads output from #1x2 window",
-    function()
-        local app_lua = [[
+    local print_AB_then_CD = [[
 curses = require 'posix.curses'
 stdscr = curses.initscr()
 curses.echo(false)
@@ -285,10 +283,13 @@ stdscr:getch()
 --
 curses.endwin()
 ]]
+
+    pending("reads output from #1x2 window",
+    function()
         --
         local app_lua_fname = os.tmpname()
         local f = io.open(app_lua_fname, 'w')
-        f:write(app_lua)
+        f:write(print_AB_then_CD)
         f:close()
         --
         local rote = require 'rote'
@@ -306,6 +307,36 @@ curses.endwin()
         rt:update()
         -- This assert fails VVVV (rowText = 'D ')
         assert.equal('CD', rt:rowText(0))
+        --
+        rt:write(' ')
+        rt:update()
+        rt:forsakeChild()
+        --
+        os.remove(app_lua_fname)
+    end)
+
+    it("reads well from large window",
+    function()
+        --
+        local app_lua_fname = os.tmpname()
+        local f = io.open(app_lua_fname, 'w')
+        f:write(print_AB_then_CD)
+        f:close()
+        --
+        local rote = require 'rote'
+        rt = rote.RoteTerm(24, 80)
+        local cmd = 'lua %s'
+        cmd = cmd:format(app_lua_fname)
+        rt:forkPty(cmd)
+        --
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:rowText(0):match('AB'))
+        --
+        rt:write(' ')
+        os.execute('sleep 1')
+        rt:update()
+        assert.truthy(rt:rowText(0):match('CD'))
         --
         rt:write(' ')
         rt:update()
