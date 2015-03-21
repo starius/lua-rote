@@ -381,7 +381,9 @@ print(rote.name2color.green) -- prints "2"
 ## Bugs
 
  - Unicode characters are printed and read with errors.
- - Method `RoteTerm:draw()` is [unreliable][2]
+ - Method `RoteTerm:draw()` is [unreliable][2].
+ - ROTE can't read cell 0x0 in 1x2 window when
+    reads second time.
 
 [Report a bug](https://github.com/starius/lua-rote/issues/new)
 
