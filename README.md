@@ -51,9 +51,9 @@ with curses applications (e.g., for unit testing).
 ## Prerequisites
 
  - Lua 5.1, 5.2, 5.3 or LuaJIT
- - [ROTE][1]
  - curses (binary + headers)
- - luaposix
+ - luaposix (install after installing curses headers!)
+ - [ROTE][1] (install after installing curses headers!)
 
 > Curses and luaposix are needed for drawing state of ROTE
 > terminal on curses' WINDOW object
