@@ -383,7 +383,8 @@ print(rote.name2color.green) -- prints "2"
  - Unicode characters are printed and read with errors.
  - Method `RoteTerm:draw()` is [unreliable][2].
  - ROTE can't read cell 0x0 in 1x2 window when
-    reads second time.
+    reads second time. It seems to be related to
+    low number of columns.
 
 [Report a bug](https://github.com/starius/lua-rote/issues/new)
 
