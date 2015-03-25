@@ -5,7 +5,7 @@ source = {
 }
 description = {
     summary = "Lua binding to ROTE, Terminal Emulation library",
-    homepage = "https://github.com/starius/lua-rote",
+    homepage = "https://starius.github.io/lua-rote",
     license = "LGPL 2.1",
     detailed = [[
 lua-rote is a Lua binding to ROTE, Terminal Emulation library
