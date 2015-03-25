@@ -85,9 +85,10 @@ with curses applications (e.g., for unit testing).</p>
 
 <ul>
 <li>Lua 5.1, 5.2, 5.3 or LuaJIT</li>
-<li><a href="http://rote.sourceforge.net/">ROTE</a></li>
 <li>curses (binary + headers)</li>
-<li>luaposix</li>
+<li>luaposix (install after installing curses headers!)</li>
+<li>
+<a href="http://rote.sourceforge.net/">ROTE</a> (install after installing curses headers!)</li>
 </ul>
 
 <blockquote>
@@ -123,7 +124,7 @@ use the following command:</p>
 <a id="option-2-install-from-local-source-tree" class="anchor" href="#option-2-install-from-local-source-tree" aria-hidden="true"><span class="octicon octicon-link"></span></a>Option 2: install from local source tree</h3>
 
 <div class="highlight highlight-bash"><pre>$ git clone https://github.com/starius/lua-rote.git
-$ <span class="pl-s3">cd</span> lua-rote
+$ <span class="pl-c1">cd</span> lua-rote
 $ luarocks make</pre></div>
 
 <h2>
@@ -142,7 +143,7 @@ code examples.</p>
 
 <div class="highlight highlight-bash"><pre>$ busted
 ++++++++++++++++++++++++++++++++
-32 successes / 0 failures / 0 errors / 0 pending <span class="pl-s3">:</span> 1.5 seconds</pre></div>
+32 successes / 0 failures / 0 errors / 0 pending <span class="pl-c1">:</span> 1.5 seconds</pre></div>
 
 <h2>
 <a id="running-the-demo" class="anchor" href="#running-the-demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the demo</h2>
@@ -193,7 +194,7 @@ while boxshell.lua consumes almost no CPU when inactive.</p>
 
 <p>Library lua-rote is loaded from module "rote":</p>
 
-<div class="highlight highlight-lua"><pre>rote <span class="pl-k">=</span> <span class="pl-s3">require</span> <span class="pl-s1"><span class="pl-pds">'</span>rote<span class="pl-pds">'</span></span></pre></div>
+<div class="highlight highlight-lua"><pre>rote <span class="pl-k">=</span> <span class="pl-c1">require</span> <span class="pl-s"><span class="pl-pds">'</span>rote<span class="pl-pds">'</span></span></pre></div>
 
 <p>All code of the library "lives" inside this module.</p>
 
@@ -207,7 +208,7 @@ RoteTerm represents terminal emulator.</p>
 <p>Create a new virtual terminal with the given dimensions.
 (Height is 24 rows, width is 80 columns.)</p>
 
-<div class="highlight highlight-lua"><pre>rt <span class="pl-k">=</span> rote.<span class="pl-s3">RoteTerm</span>(<span class="pl-c1">24</span>, <span class="pl-c1">80</span>)</pre></div>
+<div class="highlight highlight-lua"><pre>rt <span class="pl-k">=</span> rote.<span class="pl-c1">RoteTerm</span>(<span class="pl-c1">24</span>, <span class="pl-c1">80</span>)</pre></div>
 
 <p>Instance of RoteTerm is destroyed automatically
 when the corresponding Lua object is collected.</p>
@@ -217,7 +218,7 @@ when the corresponding Lua object is collected.</p>
 
 <p>Start a forked process in the terminal:</p>
 
-<div class="highlight highlight-lua"><pre>pid <span class="pl-k">=</span> rt:<span class="pl-s3">forkPty</span>(<span class="pl-s1"><span class="pl-pds">'</span>less /some/file<span class="pl-pds">'</span></span>)</pre></div>
+<div class="highlight highlight-lua"><pre>pid <span class="pl-k">=</span> rt:<span class="pl-c1">forkPty</span>(<span class="pl-s"><span class="pl-pds">'</span>less /some/file<span class="pl-pds">'</span></span>)</pre></div>
 
 <p>The command will be interpreted by '/bin/sh -c'.</p>
 
@@ -253,20 +254,20 @@ when appropriate.</p>
 
 <p>Disconnect the RoteTerm from its forked child process:</p>
 
-<div class="highlight highlight-lua"><pre>rt:<span class="pl-s3">forsakeChild</span>()</pre></div>
+<div class="highlight highlight-lua"><pre>rt:<span class="pl-c1">forsakeChild</span>()</pre></div>
 
 <h3>
 <a id="getting-contents-of-the-terminal" class="anchor" href="#getting-contents-of-the-terminal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting contents of the terminal</h3>
 
 <p>You can get number of rows and columns of the terminal:</p>
 
-<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">rows</span>()) <span class="pl-c">-- integer</span>
-<span class="pl-s3">print</span>(rt:<span class="pl-s3">cols</span>()) <span class="pl-c">-- integer</span></pre></div>
+<div class="highlight highlight-lua"><pre><span class="pl-c1">print</span>(rt:<span class="pl-c1">rows</span>()) <span class="pl-c">-- integer</span>
+<span class="pl-c1">print</span>(rt:<span class="pl-c1">cols</span>()) <span class="pl-c">-- integer</span></pre></div>
 
 <p>Get cursor coordinates:</p>
 
-<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">row</span>()) <span class="pl-c">-- integer</span>
-<span class="pl-s3">print</span>(rt:<span class="pl-s3">col</span>()) <span class="pl-c">-- integer</span></pre></div>
+<div class="highlight highlight-lua"><pre><span class="pl-c1">print</span>(rt:<span class="pl-c1">row</span>()) <span class="pl-c">-- integer</span>
+<span class="pl-c1">print</span>(rt:<span class="pl-c1">col</span>()) <span class="pl-c">-- integer</span></pre></div>
 
 <p>Before getting any output from the child process, call method
 <code>rt:update()</code> to update internal state of RoteTerm.</p>
@@ -275,8 +276,8 @@ when appropriate.</p>
 
 <div class="highlight highlight-lua"><pre>row <span class="pl-k">=</span> <span class="pl-c1">0</span>
 col <span class="pl-k">=</span> <span class="pl-c1">0</span>
-<span class="pl-s3">print</span>(rt:<span class="pl-s3">cellChar</span>(row, col)) <span class="pl-c">-- string of length 1</span>
-attr <span class="pl-k">=</span> rt:<span class="pl-s3">cellAttr</span>(row, col) <span class="pl-c">-- integer</span></pre></div>
+<span class="pl-c1">print</span>(rt:<span class="pl-c1">cellChar</span>(row, col)) <span class="pl-c">-- string of length 1</span>
+attr <span class="pl-k">=</span> rt:<span class="pl-c1">cellAttr</span>(row, col) <span class="pl-c">-- integer</span></pre></div>
 
 <p>lua-rote provides <a href="#handling-attributes">several functions</a>
 to handle attribute values.</p>
@@ -284,27 +285,27 @@ to handle attribute values.</p>
 <p>Get current attribute, that is the attribute that will be
 used for newly characters:</p>
 
-<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">attr</span>()) <span class="pl-c">-- integer</span></pre></div>
+<div class="highlight highlight-lua"><pre><span class="pl-c1">print</span>(rt:<span class="pl-c1">attr</span>()) <span class="pl-c">-- integer</span></pre></div>
 
 <p>Get a row as a string (not terminated with <code>\n</code>):</p>
 
 <div class="highlight highlight-lua"><pre>row <span class="pl-k">=</span> <span class="pl-c1">0</span>
-<span class="pl-s3">print</span>(rt:<span class="pl-s3">rowText</span>(row)) <span class="pl-c">-- string</span></pre></div>
+<span class="pl-c1">print</span>(rt:<span class="pl-c1">rowText</span>(row)) <span class="pl-c">-- string</span></pre></div>
 
 <p>Get whole terminal as a string (rows are terminated with <code>\n</code>):</p>
 
-<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rt:<span class="pl-s3">termText</span>()) <span class="pl-c">-- string</span></pre></div>
+<div class="highlight highlight-lua"><pre><span class="pl-c1">print</span>(rt:<span class="pl-c1">termText</span>()) <span class="pl-c">-- string</span></pre></div>
 
 <p><a name="draw" id="draw"></a>
 Draw contents of ROTE terminal on curses WINDOW:</p>
 
-<div class="highlight highlight-lua"><pre>curses <span class="pl-k">=</span> <span class="pl-s3">require</span> <span class="pl-s1"><span class="pl-pds">'</span>posix.curses<span class="pl-pds">'</span></span>
+<div class="highlight highlight-lua"><pre>curses <span class="pl-k">=</span> <span class="pl-c1">require</span> <span class="pl-s"><span class="pl-pds">'</span>posix.curses<span class="pl-pds">'</span></span>
 <span class="pl-c">-- setup curses, see demo/boxshell.lua</span>
 window <span class="pl-k">=</span> <span class="pl-c1">...</span>
 rt <span class="pl-k">=</span> <span class="pl-c1">...</span>
 start_row <span class="pl-k">=</span> <span class="pl-c1">0</span>
 start_col <span class="pl-k">=</span> <span class="pl-c1">0</span>
-rt:<span class="pl-s3">draw</span>(window, start_row, start_col)</pre></div>
+rt:<span class="pl-c1">draw</span>(window, start_row, start_col)</pre></div>
 
 <h3>
 <a id="changing-the-terminal-state" class="anchor" href="#changing-the-terminal-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing the terminal state</h3>
@@ -312,9 +313,9 @@ rt:<span class="pl-s3">draw</span>(window, start_row, start_col)</pre></div>
 <p>You can directly change internal state of RoteTerm by
 calling the following methods:</p>
 
-<div class="highlight highlight-lua"><pre>rt:<span class="pl-s3">setCellChar</span>(row, col, character) <span class="pl-c">-- character at (row, col)</span>
-rt:<span class="pl-s3">setCellAttr</span>(row, col, attr) <span class="pl-c">-- attribute at (row, col)</span>
-rt:<span class="pl-s3">setAttr</span>(attr) <span class="pl-c">-- current attribute</span></pre></div>
+<div class="highlight highlight-lua"><pre>rt:<span class="pl-c1">setCellChar</span>(row, col, character) <span class="pl-c">-- character at (row, col)</span>
+rt:<span class="pl-c1">setCellAttr</span>(row, col, attr) <span class="pl-c">-- attribute at (row, col)</span>
+rt:<span class="pl-c1">setAttr</span>(attr) <span class="pl-c">-- current attribute</span></pre></div>
 
 <p>You can pass data to the child process or to the terminal:</p>
 
@@ -322,15 +323,15 @@ rt:<span class="pl-s3">setAttr</span>(attr) <span class="pl-c">-- current attrib
 <span class="pl-c">-- If there is a forked process, the data will be sent to it.</span>
 <span class="pl-c">-- If there is no forked process, the data will simply</span>
 <span class="pl-c">-- be injected into the terminal (as in inject()).</span>
-rt:<span class="pl-s3">write</span>(<span class="pl-s1"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
+rt:<span class="pl-c1">write</span>(<span class="pl-s"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
 
 <span class="pl-c">-- Inject data directly into the terminal.</span>
-rt:<span class="pl-s3">inject</span>(<span class="pl-s1"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
+rt:<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</span>:wq<span class="pl-cce">\n</span><span class="pl-pds">'</span></span>)
 
 <span class="pl-c">-- Indicates to the terminal that the key has been pressed.</span>
 <span class="pl-c">-- Appropriate escape sequence is passed to method write().</span>
-<span class="pl-k">local</span> keycode <span class="pl-k">=</span> <span class="pl-s3">string.byte</span>(<span class="pl-s1"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>) <span class="pl-c">-- integer</span>
-rt:<span class="pl-s3">keyPress</span>(keycode)</pre></div>
+<span class="pl-k">local</span> keycode <span class="pl-k">=</span> <span class="pl-c1">string.byte</span>(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>) <span class="pl-c">-- integer</span>
+rt:<span class="pl-c1">keyPress</span>(keycode)</pre></div>
 
 <p>You can get values of keycodes from <a href="https://luaposix.github.io/luaposix/modules/posix.curses.html">posix.curses</a>.</p>
 
@@ -338,10 +339,10 @@ rt:<span class="pl-s3">keyPress</span>(keycode)</pre></div>
 <a id="snapshots" class="anchor" href="#snapshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Snapshots</h3>
 
 <div class="highlight highlight-lua"><pre><span class="pl-c">-- take a snapshot of the current contents of the terminal</span>
-snapshot <span class="pl-k">=</span> rt:<span class="pl-s3">takeSnapshot</span>()
+snapshot <span class="pl-k">=</span> rt:<span class="pl-c1">takeSnapshot</span>()
 <span class="pl-c">-- ... do something ...</span>
 <span class="pl-c">-- restore a snapshot previously taken</span>
-rt:<span class="pl-s3">restoreSnapshot</span>(snapshot)</pre></div>
+rt:<span class="pl-c1">restoreSnapshot</span>(snapshot)</pre></div>
 
 <p>Snapshot object is deleted automatically when the
 corresponding Lua object is collected.</p>
@@ -386,24 +387,26 @@ least significant, are</p>
 <p>There are functions provided to "pack" and "unpack"
 attribute bits:</p>
 
-<div class="highlight highlight-lua"><pre>foreground, background, bold, blink <span class="pl-k">=</span> rote.<span class="pl-s3">fromAttr</span>(attr)
-attr <span class="pl-k">=</span> rote.<span class="pl-s3">toAttr</span>(foreground, background, bold, blink)
+<div class="highlight highlight-lua"><pre>foreground, background, bold, blink <span class="pl-k">=</span> rote.<span class="pl-c1">fromAttr</span>(attr)
+attr <span class="pl-k">=</span> rote.<span class="pl-c1">toAttr</span>(foreground, background, bold, blink)
 <span class="pl-c">-- foreground and background are integers (0 - 7)</span>
 <span class="pl-c">-- bold and blink are booleans</span></pre></div>
 
 <p>The library provides tables converting color codes to and from
 human readable names:</p>
 
-<div class="highlight highlight-lua"><pre><span class="pl-s3">print</span>(rote.<span class="pl-vo">color2name</span>[<span class="pl-c1">2</span>]) <span class="pl-c">-- prints "green"</span>
-<span class="pl-s3">print</span>(rote.<span class="pl-vo">name2color</span>.<span class="pl-vo">green</span>) <span class="pl-c">-- prints "2"</span></pre></div>
+<div class="highlight highlight-lua"><pre><span class="pl-c1">print</span>(rote.<span class="pl-smi">color2name</span>[<span class="pl-c1">2</span>]) <span class="pl-c">-- prints "green"</span>
+<span class="pl-c1">print</span>(rote.<span class="pl-smi">name2color</span>.<span class="pl-smi">green</span>) <span class="pl-c">-- prints "2"</span></pre></div>
 
 <h2>
 <a id="bugs" class="anchor" href="#bugs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bugs</h2>
 
 <ul>
 <li>Unicode characters are printed and read with errors.</li>
-<li>Method <code>RoteTerm:draw()</code> is <a href="https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160">unreliable</a>
-</li>
+<li>Method <code>RoteTerm:draw()</code> is <a href="https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160">unreliable</a>.</li>
+<li>ROTE can't read cell 0x0 in 1x2 window when
+reads second time. It seems to be related to
+low number of columns.</li>
 </ul>
 
 <p><a href="https://github.com/starius/lua-rote/issues/new">Report a bug</a></p>
