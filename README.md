@@ -386,7 +386,7 @@ print(rote.name2color.green) -- prints "2"
     reads second time. It seems to be related to
     low number of columns.
 
-[Report a bug](https://github.com/starius/lua-rote/issues/new)
+[Report a bug][7]
 
 ## Author
 
@@ -399,9 +399,27 @@ See the [LICENSE][4] file for terms of use.
 ROTE was written by Bruno T. C. de Oliveira,
 see [rote.sourceforge.net][1] for more information.
 
+## Links
+
+ - [Home page][13]
+ - [ROTE][1]
+ - [Report a bug][7]
+ - [Reddit][8]
+ - [Хабрахабр][9]
+ - [lua-l][12]
+ - [Busted][10]
+ - [lua-travis-example][11]
+
 [1]: http://rote.sourceforge.net/
 [2]: https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160
 [3]: https://luaposix.github.io/luaposix/modules/posix.curses.html
 [4]: LICENSE
 [5]: .travis/install_rote.sh
 [6]: demo/boxshell.lua
+[7]: https://github.com/starius/lua-rote/issues/new
+[8]: https://www.reddit.com/r/lua/comments/30ast4/ann_luarote_lua_binding_to_rote_terminal/
+[9]: http://habrahabr.ru/post/254089/
+[10]: http://olivinelabs.com/busted/
+[11]: https://github.com/moteus/lua-travis-example
+[12]: http://lua-users.org/lists/lua-l/2015-03/msg00325.html
+[13]: http://starius.github.io/lua-rote
