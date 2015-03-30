@@ -310,6 +310,15 @@ rt:keyPress(keycode)
 ```
 
 You can get values of keycodes from [posix.curses][3].
+Unfortunately it should be initialized, otherwise
+constants are not available. Initialization of curses
+may be undesirable in an application (testing tool),
+which runs another application, which runs curses.
+There is a workaround: module `"rote.cursesConsts"`.
+It uses rote to run child Lua process, which initializes
+curses and prints values of constants.
+The module `"rote.cursesConsts"` returns them
+as a table.
 
 ### Snapshots
 

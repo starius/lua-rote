@@ -80,6 +80,7 @@ build = {
             libdirs = {"$(ROTE_LIBDIR)"},
             libraries = {"rote"},
         },
+        ['rote.cursesConsts'] = 'src/cursesConsts.lua',
     },
     install = {
         bin = { "demo/boxshell.lua" }
