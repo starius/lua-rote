@@ -333,7 +333,16 @@ rt:<span class="pl-c1">inject</span>(<span class="pl-s"><span class="pl-pds">'</
 <span class="pl-k">local</span> keycode <span class="pl-k">=</span> <span class="pl-c1">string.byte</span>(<span class="pl-s"><span class="pl-pds">'</span><span class="pl-cce">\n</span><span class="pl-pds">'</span></span>) <span class="pl-c">-- integer</span>
 rt:<span class="pl-c1">keyPress</span>(keycode)</pre></div>
 
-<p>You can get values of keycodes from <a href="https://luaposix.github.io/luaposix/modules/posix.curses.html">posix.curses</a>.</p>
+<p>You can get values of keycodes from <a href="https://luaposix.github.io/luaposix/modules/posix.curses.html">posix.curses</a>.
+Unfortunately it should be initialized, otherwise
+constants are not available. Initialization of curses
+may be undesirable in an application (testing tool),
+which runs another application, which runs curses.
+There is a workaround: module <code>"rote.cursesConsts"</code>.
+It uses rote to run child Lua process, which initializes
+curses and prints values of constants.
+The module <code>"rote.cursesConsts"</code> returns them
+as a table.</p>
 
 <h3>
 <a id="snapshots" class="anchor" href="#snapshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Snapshots</h3>
