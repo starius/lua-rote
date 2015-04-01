@@ -338,7 +338,7 @@ Unfortunately it should be initialized, otherwise
 constants are not available. Initialization of curses
 may be undesirable in an application (testing tool),
 which runs another application, which runs curses.
-There is a workaround: module <code>"rote.cursesConsts"</code>.
+There is a workaround: module <a href="https://github.com/starius/lua-rote/blob/master/src/cursesConsts.lua"><code>"rote.cursesConsts"</code></a>.
 It uses rote to run child Lua process, which initializes
 curses and prints values of constants.
 The module <code>"rote.cursesConsts"</code> returns them
