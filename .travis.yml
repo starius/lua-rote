@@ -11,14 +11,11 @@ env:
 
 before_install:
   - sudo apt-get update
-  - bash .travis/setup_lua.sh
+  - source .travis/setenv_lua.sh
   - bash .travis/install_rocks.sh
   - bash .travis/install_rote.sh
   - sudo apt-get install valgrind
   - sudo pip install cpp-coveralls
-  - luarocks path > paths
-  - echo 'PATH=$PATH:~/.luarocks/bin' >> paths
-  - . paths
 
 script:
   - bash .travis/test_with_valgrind.sh
