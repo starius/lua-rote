@@ -13,7 +13,7 @@
 
 -- based on demo/boxshell.c from ROTE
 
-local curses = require 'posix.curses'
+local curses = require 'curses'
 local signal = require 'posix.signal'
 local rote = require 'rote'
 local name2color = rote.name2color

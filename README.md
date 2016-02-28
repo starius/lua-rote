@@ -26,7 +26,7 @@ emulation support for Lua applications, making it
 possible to write programs that display terminals in
 embedded windows within them, or even monitor the display
 produced by other programs. The lua-rote library depend
-only on Lua, ROTE itself, ncurses and luaposix.
+only on Lua, ROTE itself, ncurses, lcurses and luaposix.
 
 The ROTE library is able to render the
 virtual screens to the physical screen (actually any
@@ -51,15 +51,16 @@ with curses applications (e.g., for unit testing).
 ## Prerequisites
 
  - Lua 5.1, 5.2, 5.3 or LuaJIT
+ - luaposix
  - curses (binary + headers)
- - luaposix (install after installing curses headers!)
+ - lcurses (install after installing curses headers!)
  - [ROTE][1] (install after installing curses headers!)
 
 > Curses and luaposix are needed for drawing state of ROTE
 > terminal on curses' WINDOW object
 > (method [RoteTerm:draw()](#draw)).
 > If you do not need this feature and want to exclude these
-> two dependencies, then remove CURSES and luaposix from
+> dependencies, then remove CURSES, lcurses and luaposix from
 > file `lua-rote-*.rockspec`.
 
 See [shell script][5] with installation
@@ -271,7 +272,7 @@ print(rt:termText()) -- string
 Draw contents of ROTE terminal on curses WINDOW:
 
 ```lua
-curses = require 'posix.curses'
+curses = require 'curses'
 -- setup curses, see demo/boxshell.lua
 window = ...
 rt = ...
@@ -309,7 +310,7 @@ local keycode = string.byte('\n') -- integer
 rt:keyPress(keycode)
 ```
 
-You can get values of keycodes from [posix.curses][3].
+You can get values of keycodes from [curses][3].
 Unfortunately it should be initialized, otherwise
 constants are not available. Initialization of curses
 may be undesirable in an application (testing tool),
@@ -421,7 +422,7 @@ see [rote.sourceforge.net][1] for more information.
 
 [1]: http://rote.sourceforge.net/
 [2]: https://travis-ci.org/starius/lua-rote/jobs/54479120#L1160
-[3]: https://luaposix.github.io/luaposix/modules/posix.curses.html
+[3]: https://lcurses.github.io/lcurses/
 [4]: LICENSE
 [5]: .travis/install_rote.sh
 [6]: demo/boxshell.lua

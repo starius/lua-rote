@@ -29,8 +29,8 @@ The goal of the lua-rote library is to provide terminal
 emulation support for Lua applications, making it
 possible to write programs that display terminals in
 embedded windows within them, or even monitor the display
-produced by other programs. The lua-rote library depend
-only on Lua, ROTE itself, ncurses and luaposix.
+produced by other programs. The lua-rote library depends
+only on Lua, ROTE itself, ncurses, lcurses and luaposix.
 
 The ROTE library is able to render the
 virtual screens to the physical screen (actually any
@@ -56,6 +56,7 @@ with curses applications (e.g., for unit testing).
 dependencies = {
     "lua >= 5.1",
     "luaposix",
+    "lcurses",
 }
 external_dependencies = {
     ROTE = {

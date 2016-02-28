@@ -40,8 +40,8 @@ int lua_RoteTerm(lua_State* L);
 
 /** Get curses WINDOW from a userdatum at given index.
 A userdatum stores a pointer to WINDOW.
-Metatable of the userdatum must be "posix.curses:window".
-See luaposix/ext/posix/curses/window.c
+Metatable of the userdatum must be "curses:window".
+See https://github.com/lcurses/lcurses/blob/master/ext/curses/window.c
 */
 WINDOW* lua_getWindow(lua_State* L, int index);
 

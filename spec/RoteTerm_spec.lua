@@ -191,7 +191,7 @@ describe("rote.RoteTerm", function()
 
     it("does not #leak screen size to child", function()
         local sizes_lua = [[
-curses = require 'posix.curses'
+curses = require 'curses'
 stdscr = curses.initscr()
 win_rows, win_cols = stdscr:getmaxyx()
 curses.endwin()
@@ -261,7 +261,7 @@ rt:forsakeChild()
     end)
 
     local print_AB_then_CD = [[
-curses = require 'posix.curses'
+curses = require 'curses'
 stdscr = curses.initscr()
 curses.echo(false)
 curses.start_color()
@@ -353,7 +353,7 @@ curses.endwin()
     it("reads cell where #background=foreground from child",
     function()
         local app_lua = [[
-curses = require 'posix.curses'
+curses = require 'curses'
 stdscr = curses.initscr()
 curses.echo(false)
 curses.start_color()

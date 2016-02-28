@@ -9,6 +9,6 @@
 
 WINDOW* lua_getWindow(lua_State* L, int index) {
     WINDOW** win = luaL_checkudata(L, index,
-            "posix.curses:window");
+            "curses:window");
     return *win;
 }
