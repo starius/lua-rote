@@ -25,7 +25,7 @@ The goal of the lua-rote library is to provide terminal
 emulation support for Lua applications, making it
 possible to write programs that display terminals in
 embedded windows within them, or even monitor the display
-produced by other programs. The lua-rote library depend
+produced by other programs. The lua-rote library depends
 only on Lua, ROTE itself, ncurses, lcurses and luaposix.
 
 The ROTE library is able to render the
