@@ -17,7 +17,7 @@ local wait = assert(require "posix.sys.wait")
 
 local function printConsts()
     local curses = require 'curses'
-    local stdscr = curses.initscr()
+    local _ = curses.initscr()
     curses.endwin()
     local out_fname = assert(arg[1])
     local out = io.open(out_fname, 'w')
