@@ -20,7 +20,7 @@ local name2color = rote.name2color
 
 local getout = false
 
-signal.signal(signal.SIGCHLD, function(signo)
+signal.signal(signal.SIGCHLD, function(--[[signo]])
     getout = true
 end)
 
@@ -52,8 +52,8 @@ local background = name2color.blue
 local foreground = name2color.white
 local pair = makePair(foreground, background)
 stdscr:attrset(curses.color_pair(pair))
-for i = 0, screen_h - 1 do
-    for j = 0, screen_w - 1 do
+for _ = 0, screen_h - 1 do
+    for _ = 0, screen_w - 1 do
         stdscr:addch(string.byte(' '))
     end
 end
@@ -62,8 +62,8 @@ stdscr:refresh()
 -- create a window with a frame
 local term_win = curses.newwin(22, 72, 1, 4)
 -- black over white
-local pair = makePair(name2color.black, name2color.white)
-term_win:attrset(curses.color_pair(pair))
+local pair2 = makePair(name2color.black, name2color.white)
+term_win:attrset(curses.color_pair(pair2))
 term_win:border(0, 0, 0, 0, 0, 0, 0, 0)
 term_win:mvaddstr(0, 27, " Term In a Box ")
 term_win:refresh()
